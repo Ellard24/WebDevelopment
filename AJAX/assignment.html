@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen" />
+    <title>Title</title>
+</head>
+<body>
+
+<form>
+    <fieldset>
+        <legend><b>Weather Search</b></legend>
+        <p> Please input the name of the City you want to look up the weather for</p>
+
+
+        <p> City: <input type="text" id="city"/></p>
+        <input type="submit" id="submitCity" />
+    </fieldset>
+
+    <fieldset>
+        <legend><b> Weather Results</b></legend>
+
+        <!-- Openweathers temp_min and temp_max are usually the same as temp. -->
+
+        <ul>
+            <li><b>City:</b><span id="cityName"></span></li>
+            <li><b>Main:</b><span id="descriptionMain"></span></li>
+            <li><b>Description:</b><span id="description"></span></li>
+            <li><b>Temperature:</b><span id="temperature"></span></li>
+            <li><b>Temperature Min:</b><span id="tempMin"></span></li>
+            <li><b>Temperature Max:</b><span id="tempMax"></span></li>
+            <li><b>Humidity:</b><span id="humidity"></span></li>
+            <li><b>Wind Speed:</b><span id="windspeed"></span></li>
+            <li><b>Pressure:</b><span id="pressure"></span></li>
+
+        </ul>
+
+
+
+    </fieldset>
+
+
+</form>
+
+
+<form>
+    <fieldset>
+        <legend> JSON Submission Test</legend>
+
+        <P> Type here to just test a string </P>
+
+        <p> Type Here: <input type="text" id="f1" /></p>
+
+        <input type="submit" id="jsonSubmit"/>
+    </fieldset>
+
+    <fieldset>
+
+        <span id="output1"> Output:</span>
+
+
+
+
+    </fieldset>
+
+</form>
+
+
+<form>
+    <fieldset>
+        <legend> JSON Submission Test 2</legend>
+
+
+
+        <p> Type here if you want to test a key and value</p>
+        <p> Key: <input type="text" id="f2"/>     Value: <input type="text" id="f3"/> </p>
+
+        <input type="submit" id="jsonSubmit2"/>
+    </fieldset>
+
+    <fieldset>
+
+        <span id="output2"> Output:</span>
+
+
+
+
+    </fieldset>
+
+</form>
+
+
+
+    <script src="assignJS1.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+table, th, td {
+    border: 1px solid black;
+}
+
+
+tr:nth-child(2n+2){
+    background-color: lawngreen;
+}
+
+tr.blue{
+    background-color: cornflowerblue;
+}
+
+td.red{
+    color:red;
+}
+
+td.b1{
+    color:blue;
+}
+
+
+.outer-content {
+    margin-top: 20px;
+    width: 75%;
+    background-color: pink;
+
+    display: flex;
+    justify-content: center;
+
+}
+
+.inner-content {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 75%;
+    background-color: lightblue;
+}
+
+
+
+
+
+
+}

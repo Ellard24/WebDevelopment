@@ -1,0 +1,61 @@
+<h2 align="center"> API Comments</h2>
+
+<p> So you signed up with PSN or Xbox live account to receive an API key. This is essential for this entire
+    undertaking .There is unfortunately no way around this which I will show you why below. </p>
+
+
+<p> Using Node.js and the request module, there are many options and endpoints to look at. We'll at a basic case since
+this example is more to show you what happens when you don't use an API key.</p>
+
+<p> The basic code below starts a request at the bungie.net and loads the manifest. The information we will receive
+isn't really exciting to read but it should get the point across. You should see that in the request, the X-API-Key
+has been commented out which included my own API key. </p>
+
+
+<pre class="prettyprint">
+    app.get('/',function(req,res,next){
+        var context = {};
+
+        var data2 = [];
+        request({
+            "url" : "https://www.bungie.net/platform/Destiny/Manifest",
+            "method" : "GET",
+            "headers" : {
+                //"X-API-Key" : credentials.destinyKey,
+                "Content-Type": "application/json" }},
+                function(err, response, body){
+                    if(!err && response.statusCode < 400){
+                        var data = JSON.parse(body);
+
+                        context.datalist = data2;
+                        console.log(context.datalist);
+                        res.render('home',context);
+                    } else {
+                        if(response){
+                            console.log(response.statusCode);
+                        }
+                        next(err);
+                    }
+            });
+    });
+</pre>
+<br>
+
+<p> So lets see what prints to the screen when we do this </p>
+<br>
+
+<img src="http://imgur.com/bdDLE6r.png"/>
+<br>
+
+<p> Uh oh! Well this doesn't help us at all. At least it's kind enough to tell us what went wrong.
+    So what this short lesson should tell you is that you need to include the X-API-Key for all interactions with Bungie .</p>
+
+<p> Here is how it should look </p>
+
+{{#each datalist}}
+    {{this.key}}: {{this.value}} <br>
+{{/each}}
+
+<p> Now that we know how to access the information. Lets go through some examples of things we can do with it.</p>
+
+<h3><a href="CLAN"> Clan </a> </h3>

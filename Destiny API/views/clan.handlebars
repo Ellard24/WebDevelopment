@@ -1,0 +1,132 @@
+<h2 align="center"> Clan: Because Playing with Friends is Fun</h2>
+
+<p>  So you joined up with a Clan. That's great. It is always more fun to play with friends especially when the game
+relies on putting together a competent group of people to accomplish various tasks.</p>
+
+<p> So the question is...What kind of information can we find out about our Clan from just the API? Here is the entirety
+    of the call using <code>"https://www.bungie.net/Platform/Group/188356/MembersV3/?currentPage=1"</code>. We can then get specific.The former call
+    warwdidnt require the "MembersV3" portion but that call was deprecated. </p>
+<div id="" style="overflow-y: scroll; height:400px;">
+<pre>
+    {{datalist}}
+
+</pre>
+</div>
+<br>
+
+
+<P> Below is the code I used to accomplish this. <code>JSON.stringify(data1,null,'\t') </code> makes it so much easier to read. Otherwise
+you end up with everything right next to each other and you do not want to try to make sense if it because you will likely get lost in it.</P>
+
+<br>
+
+<pre class="prettify">
+
+
+    request({
+            "url" : "https://www.bungie.net/Platform/Group/188356/MembersV3/?currentPage=1",
+            "method" : "GET",
+            "headers" : {
+                "X-API-Key" : credentials.destinyKey,
+                "Content-Type": "application/json" }},
+        function(err, response, body){
+            if(!err && response.statusCode < 400){
+
+                var data1 = JSON.parse(body);
+
+
+                context.datalist = JSON.stringify(data1,null,'\t');
+                res.render('clan',context);
+</pre>
+
+<br>
+
+<p> A quick explanation of the parameters used. The number 188356 is the unique identifier for the clan I am probing.
+To find these numbers you can go on to Bungie.net and locate your profile. You can find numbers regarding your clan as well as
+your own player ID as well. The other thing to note is the query parameters. The "?currentPage=1" just means that I want one page.  You could
+    also add an items per page parameter as well if you only wanted to see the first say for example
+    the first 10 people in the clan. One other thing to note, the page tends to not load if you don't include at least the current page in the URL.</p>
+
+
+
+
+<p>Now we are going to focus in on just the displayNames and to then build a list of all players in the Clan.I will show you two ways.Here
+    is the code I used for these two methods.
+    </p>
+
+
+<br>
+
+<pre>
+    /*** OPTION 1  **/
+
+     var people =  data1.Response.results;
+
+
+
+                var key = 'displayName';
+                for (var i = 0; i < people.length;i++) {
+                            data2.push({"key": key, "value": people[i].user.displayName});
+
+                }
+
+
+
+
+
+     /*** OPTION 2  **/
+
+    function alertObj(obj) {
+
+        for (var data in obj) {
+            if(typeof(obj[data]) === "object")
+                alertObj(obj[data]);
+            else {
+                if (obj.hasOwnProperty(data)) {
+                    if ((data = 'displayName') && (obj[data] != undefined))
+                        data2.push({"key": data, "value": obj[data]});
+                }
+                else
+                    return;
+            }
+        }
+    }
+
+
+
+
+
+     for (var i = 0, len=data2.length; i < len; i++)
+                    data3[data2[i]['value']] = data2[i];
+
+                data2 = new Array();
+                for (var key in data3)
+                    data2.push(data3[key]);
+
+
+
+</pre>
+<br>
+<P>
+    The first way relies on you knowing some of the names of the values. Then it just iterates over the length of the results.
+    The second way as you can see it is a bit detailed but can be easier to use if you dont want to have to deal with
+    all the categories within the JSON response. I had to use a helper function(alertObj) to deal with this. Its a recursive function that will
+    deal with the nested objects to store the values that I desired in a array. The second portion of the code deals with
+    removing the duplicate values. That is the downside of this method, it sometimes gives undefined results and duplicates.
+
+    After all this, it leaves us with a clear to read list of people in the clan. Pretty neat. There are
+    obviously other ways of doing it but this implementation worked out fine. And you can use this to pick out whatever topic of clan interest you want to
+    monitor. You could even go a step further and implement this into an app that would then monitor the status of your clan. The game interface itself
+    doesnt actually a clan page so you could just make your own on your phone. The list shown here
+    is actually a live representation of the people in the clan. </P>
+<br>
+
+<pre>
+
+    {{#each datalist2}}
+        {{this.key}}: {{this.value}} <br>
+    {{/each}}
+
+</pre>
+
+<a href="Equipment"> Next Page: Equipment </a>

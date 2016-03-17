@@ -1,0 +1,84 @@
+<h1 align="center"> Exercise Log </h1>
+
+
+<form>
+    <fieldset>
+        <legend> Use this form to enter a new Exercise</legend>
+        <label id="nameLabel"> Exercise Name: </label>
+        <input type="text" name="exerciseName" id="exerciseN"/>
+
+        <label id="repLabel"> Number of Reps: </label>
+        <input type="text" name="numReps" id="reps"/>
+
+        <label id="weightLabel"> Weight: </label>
+        <input type="text" name="weight" id="weightNum"/>
+
+        <label id="dateLabel"> Date: </label>
+        <input type="text" name="date" id="dateVal"/>
+
+        <select name="lbInput" id="lbsInsert">
+            <option value="0" >kg</option>
+            <option value="1" >lbs</option>
+
+        </select>
+
+
+
+        <input type="submit" id="submitExercise"/>
+    </fieldset>
+
+</form>
+
+
+<h3 align="center"> Current Exercise List </h3>
+<div id="tableStart">
+
+
+
+
+
+
+
+</div>
+
+<div id="editForm" style="display: none;">
+
+    <form>
+        <fieldset>
+            <legend> Use this form to enter a new Exercise</legend>
+
+            <label id="IDLabel"> ID Number: </label>
+            <input type="hidden" name="IDLab" id="ID2" />
+
+            <label id="nameLabel"> Exercise Name: </label>
+            <input type="text" name="exerciseName2" id="exerciseN2" />
+
+            <label id="repLabel"> Number of Reps: </label>
+            <input type="text" name="numReps2" id="reps2"/>
+
+            <label id="weightLabel"> Weight: </label>
+            <input type="text" name="weight2" id="weightNum2" />
+
+            <label id="dateLabel"> Date: </label>
+            <input type="text" name="date2" id="dateVal2" />
+
+            <select name="lbInput2" id="lbsInsert2" >
+                <option value="0" >kg</option>
+                <option value="1" >lbs</option>
+
+            </select>
+
+
+
+            <input type="submit" id="updateExercise"/>
+        </fieldset>
+
+    </form>
+
+
+
+
+
+</div>
+
+

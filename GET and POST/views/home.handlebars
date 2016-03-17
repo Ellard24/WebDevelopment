@@ -1,0 +1,59 @@
+{{#if dataList2}}
+	<h1> POST Request Received </h1>
+
+	<div>
+        <table>
+             <legend> Query Parameter Names and Values </legend>
+             {{#each dataList3}}
+                <tr>
+                    <td> {{this.key}} </td>
+                    <td> {{this.value}} </td>>
+
+                </tr>
+            {{/each}}
+        </table>
+   		 
+		<br>
+		<br>
+
+        	<table>
+                	<legend> POST Request Data Table </legend>
+
+        	{{#if dataList2}}
+                	{{#each dataList2}}
+                	<tr>
+                        	<td> {{this.key}} </td>
+                        	<td> {{this.value}} </td>
+
+                	</tr>
+                	{{/each}}
+        	{{else}}
+                	<p> No Data Received </p>
+
+		{{/if}}
+	</div>
+
+
+
+
+{{else}}
+	<h1> GET Request Received </h1>
+
+	<div>
+		<table>
+			<legend> GET Request Data Table </legend>
+			
+		{{#if dataList}}	
+			{{#each dataList}}
+			<tr>
+				<td> {{this.key}} </td>
+				<td> {{this.value}} </td>
+		
+			</tr>
+			{{/each}}
+		</table>
+		{{else}}
+			<p> No Data Received </p>
+   		{{/if}}
+	</div>
+{{/if}}

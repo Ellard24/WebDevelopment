@@ -1,0 +1,102 @@
+<div class="row">
+<div>
+<p> One of the fascinating design choices behind Destiny is that a lot of the story is not readily available
+to the player. By this I mean that while you get the general idea of whats going on in the game just by playing, there is
+a whole world of information out there that the game doesn't present to you. Instead what it does is you unlock grimoire
+cards by accomplishing tasks which you can then look up online later to see some detailed description of some aspect
+of Destiny. So the API endpoint to look at here is the Vanguard/Grimoire/Definition. There aren't any additional parameters to the call.</p>
+</div>
+<pre>
+
+request({
+            "url" : "http://www.bungie.net/Platform/Destiny/Vanguard/Grimoire/Definition/",
+            "method" : "GET",
+            "headers" : {
+                "X-API-Key" : credentials.destinyKey,
+                "Content-Type": "application/json" }},
+
+</pre>
+
+
+
+
+<div >
+
+    <img src="images/Grim.PNG"/>
+
+</div>
+
+<div>
+<p> So those are all the possible types of information we can look at. Most of it is pretty easy to understand.
+    Card ID is a number, card name gives the name, description
+    gives a description,etc. The points type is an integer which a player can accumulate. If you are familiar with the
+    xbox achievement point system, this is essentially the same type of thing. unlockHowToText gives a description or hint
+    rather on how to get the card. You might be able to find out something interesting
+if you read long enough. You could technically use For now, lets make like a story book and get all the descriptions together. </p>
+</div>
+<pre>
+    for (var data in obj) {
+            if(typeof(obj[data]) === "object")
+                alertObj(obj[data]);
+            else {
+                if (obj.hasOwnProperty(data)) {
+                    if (data = 'cardDescription')
+                        data2.push({"key": data, "value": obj[data]});
+
+                }
+                else
+                    return;
+
+
+</pre>
+
+<div>
+<p> Once again rely on our object function to extrapolate the details with the emphasis on description. And as seen below, suddenly
+its like we have a whole book worth of information here. Go figure why they never added this into the actual game itself.</p>
+</div>
+<div id="" style="overflow-y: scroll; height:400px;">
+<pre>
+
+    {{#each datalist}}
+       <b> {{this.key}}: </b> <br>
+        {{this.value}} <br>
+    {{/each}}
+
+
+</pre>
+
+</div>
+
+<p> Maybe we can import the picture that correlates to the Grimoire card. I mean cards have illustrations. One of the
+categories from before that was shown on the list is called "sheetPath" The data for this category is a whole bunch of url endings for jpg files.</p>
+
+<img src="images/Grim2.PNG" align="middle">
+
+
+
+<p> So now we can stringify that data from the JSON which should just give us a whole list of paths that we can use.
+If we then store one of those paths into a variable and then concatenate that with the beginning part of the Bungie URL
+    (http://www.bungie.net"), we can then link a picture. The code below shows that . Data4 is just the array I used to
+store all of them. Context is the object I send through the res.render(). The image shown below is printed because I set
+its source using handlebars  "img src = { { image1 } }". I had to add spacing here because handlebars otherwise assumes
+it needs to put something there. You could also just set this full URL into a variable and then use it that way as well.
+
+<pre>
+     if ((data = 'sheetPath') && (obj[data] != undefined))
+    {
+        data.push(JSON.stringify(obj[data]));
+    }
+
+
+    Plus
+
+
+    context.image1 =  String("http://www.bungie.net" + JSON.parse(data4[1]));
+
+</pre>
+
+<img align="middle" src={{image1}} >
+
+<a href="Raid"> Raid </a>
+
+</div>

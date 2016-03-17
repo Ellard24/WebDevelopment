@@ -1,0 +1,110 @@
+
+<h1> Loot: Because you can never have enough items</h1>
+
+
+<P> Now an RPG isn't an RPG unless it has ample amounts of gear to collect. Destiny luckily fulfills that need very
+well. We can do a similar type of search like the previous example but there is a lot of information out there. We will
+need to give some specific parameters to the request in order to get some understandable data. </P>
+
+
+<code> http://www.bungie.net/Platform/Destiny/Manifest/InventoryItem/3658182170 </code>
+<p> This is the URL we can use. THe number at the end is the unique ID. This is good for finding out information
+about something that you already know the ID of. Here is some information it shows</p>
+
+<div id="" style="overflow-y: scroll; height:400px;">
+<pre>
+
+    {{datalist}}
+
+
+
+</pre>
+</div>
+
+
+<p> So the item we retrieved here is called Bad Juju. The itemTypeName declares it to be a pulse rifle. actionName declares
+that it is able to dismantled(which means you can destroy it to recover materials). Theres an itemDescription, tierTypeName(this means rarity),
+a minimum level requirement of 40, and a whole list of stats. Some of the stats aren't really described well here but if you parse through the data
+    you can generally tell what its supposed to do in the game. For example, I can tell you from
+personal experience that Bad Juju starts off at 280 damage but can be upgraded to 310. This is shown at the stats: 368428387. Lets load its picture in too
+since it did give us the url for it <code> /common/destiny_content/icons/670d511e877ef6be81d93fa0e5d41fd7.jpg</code>. I explain that a bit on the next page.
+
+<img src={{image}}>
+<br>
+<br>
+
+
+<p> How about we pick out just some specific items. The previous request URL is not so good for this. The Destiny Explorer/Item
+    url <code> http://www.bungie.net/Platform/Destiny/Explorer/Items/ </code> allows for better finding of a desired item and is not based on knowing the unique ID. Lets give it a try.</P>
+
+
+<ul>
+    <li> characterClass - Some items are class specific so you can specify the class</li>
+    <li> count - specify the amount you want to return</li>
+    <li> subtype - every class has a subclass which have restricted gear as well</li>
+    <li> definitions - this includes definitions in the response(can be true or false). </li>
+    <li> Rarity - Items can be uncommom, common, rare, legendary</li>
+    <li> Type- Items can be currency, armor, materials, consumables, etc</li>
+    <li> Bucket - An additional parameter like Type which lets you pick weapons or armor subclasses </li>
+</ul>
+
+
+
+<P> It is important to note that the process is actually not error free. For some reason a lot of items sometimes come up in multiple searches with the incorrect parameters.
+    One of the most useful search parameters is the bucket. So lets find something interesting. Lets find a chest armor piece to protect us from all the damage we know we are
+ going to take anyway. Lets make this item be "Exotic" which is the highest rarity available because we want to be the best.</P>
+
+<p>So our parameters are going to be /?buckets=2048&count=5&rarity=6&definitions=true</p>
+
+
+
+<img src="images/Equip2.PNG">
+
+<br>
+<p> And it worked!</p>
+
+
+
+<p> Now there is something even more interesting we can do. Since the official companion app actually takes advantage of this
+feature, I figured I would disclose it here as well. We can actually physically make a POST to Bungie declaring which weapon
+we want to equip(assuming of course we are currently in ownership of it and not currently in combat). It's actually an incredible
+thing to witness. </p>
+
+<pre>
+POST:
+    "https://www.bungie.net/Platform/Destiny/TransferItem/"
+
+    With the following parameters after /TransferItem/
+
+    {
+    characterId: "{whatever value for character id}",
+    itemId: "0", // itemInstanceId for weapons and armour, zero for everything else
+    itemReferenceHash: "2904517731", // itemHash
+    membershipType: "2", //This value can be 1 or 2 depending on xbox/ps
+    stackSize: 1, // this specifies the amount.
+    transferToVault: false, // this value is whether to send to your personal bank(the vault) or pull from vault to character
+                            //true for sending to vault and false to pull
+}
+</pre>
+
+<p> Here is an example of how it would work. Please note that this however does require to be already logged into
+bungie.net via your xbox live or psn account(the use of cookies helps here as well). Most third party applications that allow you to do this require you to login
+    as well to Bungie.It wouldn't be very good if you could just move other player's gear around
+based solely on the fact you know their character ID. </p>
+<pre>
+
+ var params = {whatever corresponded to the above combinations}
+
+var req = new XMLHttpRequest();
+      req.open("POST", "https://www.bungie.net/Platform/Destiny/TransferItem/", false);
+      req.setRequestHeader('Content-Type', 'application/json');
+      req.setrequestHeader('X-API KEY', credentials.destinyKey);
+      req.send(params);
+      console.log(JSON.parse(req.responseText));
+
+
+</pre>
+
+<p> More information regarding this type of interaction: https://www.reddit.com/r/destinyitemmanager</p>
+
+<p><a href="Grimoire"> Grimoire </a> </p>

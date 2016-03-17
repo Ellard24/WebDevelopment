@@ -1,0 +1,105 @@
+<h2> Character Identification and Raids</h2>
+
+
+<p> So we have gone over Clan, Equipment, and Grimoire concepts. Now we are going to dive into
+    information regarding the hardest part and my opinion the most fun concept in the game...raids.
+
+    For the uninitiated, a raid is a MMORPG term for a big dungeon with far tougher bosses than anything
+    you have encountered before. It requires larger groups of people and far better coordination if you expect
+    to get through it alive. As a PVE(player vs environment) player, this is the ultimate battleground for you.</p>
+
+
+    <p> But before we get into that, we are going to need to explain character identification.
+        Now the information we can retrieve about Raids thats not already available from the Grimoire cards requires
+        using a bit more unique identifiers in our URL. I mentioned this a earlier in the guide but essentially you can look this information
+        from the Bungie website for your specific character. Here they are briefly explained with an example below that:</p>
+
+<ul> Important Parameters to Know
+    <li> MembershipType - This can be 1 or 2 depending on the console(Xbox or Playstation)</li>
+    <li> MembershipId - This will the number corresponding to your account</li>
+    <li> CharacterId - Since you can have multiple characters on your account, this corresponds to the character</li>
+
+</ul>
+
+
+<p> It is also important to know that if you dont want to use the website to figure this out, you can actually use another call to find the relevant information for you.
+    There are only two parameters required here {membershipType} which like mentioned before is 1 or 2 and {displayName} your name.
+
+</p>
+
+
+<pre>
+    	"url" : "http://www.bungie.net/Platform/Destiny/SearchDestinyPlayer/{membershipType}/{displayName}/
+
+
+    Which then gives the response as follows
+
+{
+    "Response": [
+        {
+            "iconPath": "This will contain the location of the picture used for your account",
+            "membershipType": "same as before,
+            "membershipId": "this will be the unique ID for your account",
+            "displayName": "and your username"
+        }
+    ],
+    "ErrorCode": 1,
+    "ThrottleSeconds": 0,
+    "ErrorStatus": "Success",
+    "Message": "Ok",
+    "MessageData": {
+
+    }
+}
+
+
+
+</pre>
+
+<p> Now lets look at the big URL now. This will be the one used to get the raid data. Here is an example.</p>
+
+<pre>           "url" : "http://www.bungie.net/Platform/Destiny/Stats/ActivityHistory/1/4611686018439072542/2305843009241295215/?mode=4&count=20&page=0&definitions=true",
+</pre>
+
+
+
+
+<p> This one obviously have more parameters. After the 3 unique IDs explained before is the very important "mode" parameter. The mode refers to the type of
+game style you want to look up. </p>
+
+<p>As of this March, these are all the possible modes: <br>
+
+<b>Game mode:</b> AllArena, AllPvE, AllPvP, AllStrikes, Arena, ArenaChallenge, Control, Elimination, FreeForAll, Heroic, IronBanner, Lockdown, Mayhem, Nightfall,
+None, Patrol, PvPIntroduction, Raid, Rift, Story, Strike, Team, ThreeVsThree, TrialsOfOsiris, or ZoneControl. "None" returns all activities.</p>
+
+<p>Since we are interested in raid information, we will put in raid for mode(each mode has a corresponding value with raids equalling
+    4). Doing so will give a response with a lot of keys but I will explain the important ones </p>
+
+<ul>
+    <li>instanceId- this is a unique ID for your current raid session. This value is ever incrementing and no instances have the same ID</li>
+    <li>playerCount- Number of players in the group. The most allowed is 6 </li>
+    <li>period- This will give the start date and time of the session</li>
+    <li>displayValue- This gives the total time spent in that session. This totals the amount of time spent between all times in that session. </li>
+    <li>activity name- Name of the Raid (Vault of Glass, Crota's End, or King's Fall)</li>
+    <li></li>
+
+</ul>
+
+<p> In addition to those, you can also find the amount of kills, deaths, assists, completion (yes or no). This is all really important information
+that a person could collect as stats</p>
+
+
+<div id="" style="overflow-y: scroll; height:400px;">
+<pre>
+
+    {{datalist}}
+
+    {{#each datalist}}
+        <b> {{this.key}}:  {{this.value}}</b> <br>
+
+    {{/each}}
+
+
+</pre>
+
+</div>
